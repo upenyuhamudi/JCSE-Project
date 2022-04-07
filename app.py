@@ -48,7 +48,7 @@ class Forms(db.Model, UserMixin):
 
 
 class LoginForm(FlaskForm):
-    emailaddress = StringField(validators=[InputRequired(),Length(min=4,max=20),Email()],render_kw={"placeholder": "Email Address"})
+    emailaddress = StringField(validators=[InputRequired(),Length(min=4,max=80),Email()],render_kw={"placeholder": "Email Address"})
 
     password = PasswordField(validators=[InputRequired(),Length(min=4,max=20)], render_kw={"placeholder": "Password"})
 

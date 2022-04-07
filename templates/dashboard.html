@@ -8,6 +8,14 @@
 </head>
 <body>
     <h1>Hello you are logged in</h1><br>
+
+    <h2>What would you like to do?</h2>
+
+    <!--Here we add the applications HTML-->
+    <a href="{{url_for('logout')}}">Apply for a course</a>
+    <a href="{{url_for('logout')}}">View Applications</a>
+    <!--Here we add a mailto function that opens an email editor-->
+    <a href="mailto:admissions@uhardknocks.ac.za?subject=Request%20for%20Admissions%20Access">Request Admission Admin Access</a><br>
     <a href="{{url_for('logout')}}">Logout</a>
 </body>
 </html>

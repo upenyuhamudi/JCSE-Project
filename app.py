@@ -1,6 +1,6 @@
 import sqlite3
 import bcrypt
-from flask import Flask, redirect, render_template,url_for,flash
+from flask import Flask, redirect, render_template, request,url_for,flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
@@ -42,9 +42,10 @@ class Forms(db.Model, UserMixin):
     firstname = db.Column(db.String(50), nullable=False)
     lastname = db.Column(db.String(50), nullable=False)
     address = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(80), nullable=False, unique=True)
     discipline = db.Column(db.String(50), nullable=False)
     gpa = db.Column(db.String(10), nullable=False)
+    application_status = db.Column(db.String(20), nullable=False)
+    user_id = db.Column(db.Integer, nullable=False)
 
 
 class LoginForm(FlaskForm):
@@ -74,18 +75,13 @@ class ApplicationForm(FlaskForm):
 
     address = StringField(validators=[InputRequired(), Length(min=1, max=100)], render_kw={"placeholder": "address"})
 
-    email = StringField(validators=[InputRequired(), Length(min=10, max=80)], render_kw={"placeholder": "email"})
+    #email = StringField(validators=[InputRequired(), Length(min=10, max=80)], render_kw={"placeholder": "email"})
 
     discipline = StringField(validators=[InputRequired(), Length(min=1, max=50)], render_kw={"placeholder": "discipline"})
 
     gpa = StringField(validators=[InputRequired(), Length(min=1, max=10)], render_kw={"placeholder": "gpa"})
 
-    submit = SubmitField("Submit")
-
-    def validate_email(self, email):
-        existing_user_email = Forms.query.filter_by(email=email.data).first()
-        if existing_user_email:
-            raise ValidationError("That email already exists. You have already applied")  
+    submit = SubmitField("Submit")  
 
 @app.before_first_request
 def create_tables():
@@ -103,12 +99,23 @@ def login():
         if user:
             if bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user)
-                return redirect(url_for('dashboard'))
+                print(user.id)
+                if user.usertype == 'applicant':
+                    return redirect(url_for('dashboard',user_id=user.id))
+                return redirect(url_for('admin_dashboard',user_id=user.id))
     return render_template('login.html',form=form)
+
+
 
 @app.route('/dashboard', methods = ['GET','POST'])
 def dashboard():
-    return render_template('dashboard.html')
+    user_id = request.args.get('user_id')
+    return render_template('dashboard.html',user = user_id)
+
+@app.route('/admin_dashboard', methods = ['GET','POST'])
+def admin_dashboard():
+    user_id = request.args.get('user_id')
+    return render_template('admin_dashboard.html',user = user_id)
 
 @app.route('/logout',methods=['GET','POST'])
 @login_required
@@ -120,7 +127,6 @@ def logout():
 @app.route('/register', methods = ['GET','POST'])
 def register():
     form = RegisterForm()
-
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data)
         new_user = User(emailaddress=form.emailaddress.data,password=hashed_password,usertype='applicant')
@@ -131,7 +137,8 @@ def register():
 
 @app.route('/new_application')
 def new_application():
-   return render_template('form.html')
+    user_id = request.args.get('user_id')
+    return render_template('form.html',user = user_id)
 
 @app.route('/view_my_application')
 def view_my_application():
@@ -144,7 +151,8 @@ def view_my_application_status():
 @app.route('/addtoformtable', methods=['GET', 'POST'])
 def addtoformtable():
     form = ApplicationForm()
-    new_form = Forms(firstname=form.firstname.data, lastname=form.lastname.data, address=form.address.data, email=form.email.data, discipline=form.discipline.data, gpa=form.gpa.data)
+    user = request.args.get('user_id')
+    new_form = Forms(firstname=form.firstname.data, lastname=form.lastname.data, address=form.address.data, discipline=form.discipline.data, gpa=form.gpa.data, application_status='Pending',user_id = user)
     db.session.add(new_form)
     db.session.commit()
     return render_template('result.html')

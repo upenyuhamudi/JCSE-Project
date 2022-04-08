@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formmm</title>
+    <title>Application Form</title>
 </head>
 <body>
     <h1>Application form</h1><br>
 
-    <form method="POST" action="{{url_for('addtoformtable')}}">
+    <form method="POST" action="{{url_for('addtoformtable',user_id=user)}}">
 
         First Name<br>
         <input type = "text" name = "firstname" /></br>
@@ -20,8 +20,8 @@
         Home Address<br>
         <textarea name = "address" ></textarea><br>
 
-        Email Address<br>
-        <input type = "text" name = "email" /></br>
+        <!--Email Address<br>
+        <input type = "text" name = "email" /></br> -->
 
         Discipine<br>
         <input type = "text" name = "discipline" /><br>

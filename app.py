@@ -19,7 +19,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 
-connection = sqlite3.connect('database.db')
+connection = sqlite3.connect('database.db', check_same_thread=False)
 cursor = connection.cursor()
 
 command1 = """CREATE TABLE IF NOT EXISTS forms(form_id INTEGER PRIMARY KEY, firstname STRING, lastname STRING, address STRING, email STRING, discipline STRING, gpa STRING)"""
@@ -140,9 +140,15 @@ def new_application():
     user_id = request.args.get('user_id')
     return render_template('form.html',user = user_id)
 
-@app.route('/view_my_application')
+@app.route('/view_my_application',methods = ['GET','POST'])
 def view_my_application():
-   return render_template('view_application.html')
+
+   user_id = request.args.get('user_id')
+   user1 = str(user_id)
+
+   cursor = connection.execute('SELECT firstname, lastname, address, discipline, gpa, application_status FROM forms WHERE user_id =' +user1)
+   return render_template('view_application.html', items=cursor.fetchall(),user = user_id)
+   #return render_template('view_application.html')
 
 @app.route('/view_my_application_status')
 def view_my_application_status():

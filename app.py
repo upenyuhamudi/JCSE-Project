@@ -1,10 +1,12 @@
+from email.mime import application
 import sqlite3
+from telnetlib import STATUS
 import bcrypt
 from flask import Flask, redirect, render_template, request,url_for,flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField
+from wtforms import StringField, SubmitField, PasswordField, SelectField
 from wtforms.validators import InputRequired, Length, ValidationError, Email
 from flask_bcrypt import Bcrypt
 
@@ -22,10 +24,12 @@ login_manager.login_view = "login"
 connection = sqlite3.connect('database.db')
 cursor = connection.cursor()
 
+#Create Application Table
 command1 = """CREATE TABLE IF NOT EXISTS forms(form_id INTEGER PRIMARY KEY, firstname STRING, lastname STRING, address STRING, email STRING, discipline STRING, gpa STRING)"""
-
 cursor.execute(command1)
 #cursor.execute('DROP TABLE forms')
+
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -83,6 +87,12 @@ class ApplicationForm(FlaskForm):
 
     submit = SubmitField("Submit")  
 
+class UpdateApplication(FlaskForm):
+   
+    application_status_update = StringField(validators=[InputRequired(), Length(min=1, max=50)], render_kw={"placeholder": "status"})
+    
+    submit = SubmitField("Update Application Status")
+
 @app.before_first_request
 def create_tables():
     db.create_all()               
@@ -105,8 +115,6 @@ def login():
                 return redirect(url_for('admin_dashboard',user_id=user.id))
     return render_template('login.html',form=form)
 
-
-
 @app.route('/dashboard', methods = ['GET','POST'])
 def dashboard():
     user_id = request.args.get('user_id')
@@ -115,7 +123,9 @@ def dashboard():
 @app.route('/admin_dashboard', methods = ['GET','POST'])
 def admin_dashboard():
     user_id = request.args.get('user_id')
-    return render_template('admin_dashboard.html',user = user_id)
+    applications = Forms.query.all()
+    return render_template('admin_dashboard.html',user = user_id, data=applications)
+
 
 @app.route('/logout',methods=['GET','POST'])
 @login_required
@@ -165,7 +175,19 @@ def addtoformtable():
 
     #return render_template('duplicate_application.html', form=form)
 
+@app.route('/update_application/<form_id>/', methods=('GET', 'POST'))
+def update_application(form_id):
+    applicant = Forms.query.get(form_id)    
+    return render_template('update_application.html',applicant=applicant)
 
+@app.route('/application_updated/<form_id>/<application_status>', methods=('GET', 'POST'))
+def application_updated(form_id,application_status):  
+    if request.method == 'POST':
+        application = Forms.query.get(form_id)
+        application.application_status = application_status
+        db.session.commit()
+        db.session.close_all()
+        return redirect(url_for('admin_dashboard'))    
 
 if __name__ == '__main__':
     app.run(debug=True)

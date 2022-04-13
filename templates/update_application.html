@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Details</title>
+</head>
+<body>
+    <h1>Update Application Status</h1><br>
+    
+    <p>Application ID: {{applicant.form_id}}</p><br>
+    <p>First Name: {{applicant.firstname}}</p><br>
+    <p>Surname: {{applicant.lastname}}</p><br>
+    <p>Address: {{applicant.address}}</p><br>
+    <p>Discipline: {{applicant.discipline}}</p><br>
+    <p>GPA: {{applicant.gpa}}</p><br>
+
+     <form action="{{url_for('application_updated',form_id = applicant.form_id,application_status='Accepted')}}" method="POST">
+
+        <input type = "submit" value = "Accept Application" />
+
+     </form>
+    
+     <form action="{{url_for('application_updated',form_id = applicant.form_id,application_status='Rejected')}}" method="POST">
+
+        <input type = "submit" value = "Reject Application" />
+
+     </form>
+
+
+     <form action="{{url_for('application_updated',form_id = applicant.form_id,application_status='Waiting List')}}" method="POST">
+
+        <input type = "submit" value = "Add to Waiting List" />
+
+     </form>
+
+</body>
+</html>

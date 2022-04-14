@@ -9,6 +9,9 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, SelectField
 from wtforms.validators import InputRequired, Length, ValidationError, Email
 from flask_bcrypt import Bcrypt
+import logging
+
+
 
 app = Flask(__name__)
 
@@ -191,6 +194,8 @@ def update_application(form_id):
     applicant = Forms.query.get(form_id)    
     return render_template('update_application.html',applicant=applicant)
 
+
+
 @app.route('/application_updated/<form_id>/<application_status>', methods=('GET', 'POST'))
 def application_updated(form_id,application_status):  
     if request.method == 'POST':
@@ -200,5 +205,19 @@ def application_updated(form_id,application_status):
         db.session.close_all()
         return redirect(url_for('admin_dashboard'))    
 
+logging.basicConfig(level=logging.DEBUG)
+logging.debug('This will get logged') 
+
+logging.basicConfig(level=logging.INFO)
+logging.info('This is an info message')
+logging.warning('This is a warning message')
+logging.error('This is an error message')
+logging.critical('This is a critical message') 
+
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
+
+

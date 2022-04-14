@@ -5,20 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Application Form</title>
-</head>
-<body>
-    <h1>Application form</h1><br>
+    <style type="text/css">
+      body{
+      font-family: Calibri;
+      font-size: 12pt;
+      }
+    </style>
 
-    <form method="POST" action="{{url_for('addtoformtable',user_id=user)}}">
+</head>
+<body style = "background: url(https://cdn.pixabay.com/photo/2017/03/30/13/56/turquoise-2188530__340.jpg); background-size: 100%;">
+    <h1><center>Application form</center></h1><br>
+
+    <form method="POST" action="{{url_for('addtoformtable',user_id=user)}}"><center>
 
         First Name<br>
-        <input type = "text" name = "firstname" /></br>
+        <input type = "text" name = "firstname" /></br><br>
 
         Last Name<br>
-        <input type = "text" name = "lastname" /></br>
+        <input type = "text" name = "lastname" /></br><br>
         
         Home Address<br>
-        <textarea name = "address" ></textarea><br>
+        <textarea name = "address" ></textarea><br><br>
 
         <!--Email Address<br>
         <input type = "text" name = "email" /></br> -->
@@ -34,11 +41,11 @@
         <br><br>
         
         GPA(%)<br>
-        <input type = "text" name = "gpa" /><br>
+        <input type = "text" name = "gpa" /><br><br>
 
         <input type = "submit" value = "submit" /><br>
 
-     </form>
+      </center></form>
 
 </body>
 </html>

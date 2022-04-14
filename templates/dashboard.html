@@ -5,14 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Applicant Dashboard</title>
+    <style type="text/css">
+        body{
+        font-family: Calibri;
+        font-size: 12pt;
+        }
+    </style>
 </head>
-<body>
-    <h1>Hello you are logged in</h1>
+<body style = "background: url(https://airwallpaper.com/wp-content/uploads/wall003/Abstract-Blue-Gradient-Backgrounds.jpg); background-size: 100%;">
+    <h1><center>Hello, you are logged in!</center></h1><br><br>
 
-    <a href={{url_for('new_application',user_id=user)}}>Click here to apply</a><br>
-    <a href={{url_for('view_my_application',user_id=user)}}>Click here to view application</a><br>
-    <a href="mailto:admissions@uhardknocks.ac.za?subject=Request%20for%20Admissions%20Access">Request to be admissions admin</a><br>   
-    <a href="{{url_for('logout')}}">Click here to logout</a><br>
+    <a href={{url_for('new_application',user_id=user)}}><h3><center>Click here to apply</center></h3></a>
+    <a href={{url_for('view_my_application',user_id=user)}}><h3><center>Click here to view application</center></h3></a>
+    <a href="mailto:admissions@uhardknocks.ac.za?subject=Request%20for%20Admissions%20Access"><h3><center>Request to be admissions admin</center></h4></a> 
+    <a href="{{url_for('logout')}}"><h3><center>Click here to logout</center></h3></a>
 
 
 </body>

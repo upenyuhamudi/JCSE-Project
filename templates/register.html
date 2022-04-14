@@ -6,20 +6,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - University of the Hardknocks Application System</title>
+    <style type="text/css">
+        body{
+        font-family: Calibri;
+        font-size: 15pt;
+        }
+    
+    </style>
 </head>
 
-<body>
-    <h1>Welcome to University of the Hardknocks Application System</h1>
-    <h2>Register</h2>
+<body style = "background: url(https://media.istockphoto.com/videos/gradient-background-reminiscent-of-the-fluctuation-of-the-surface-of-video-id1282239766?s=640x640); background-size: 100%;">
+    <h1><center>Welcome to University of the Hardknocks Application System!</center></h1>
+    <h2><center>Register<center></h2>
     
-    <form method="POST" action="">
+    <form method="POST" action=""><center>
         {{ form.hidden_tag() }}
-        {{ form.emailaddress }}
-        {{ form.password }}
-        {{ form.submit }}
-    </form>
+        {{ form.emailaddress }}<br>
+        {{ form.password }}<br>
+        {{ form.submit }}<br>
+    <center></form><br><br>
 
-    <a href="{{url_for('home')}}">Go to Home Page</a><br>
-    <a href="{{url_for('login')}}">Already registered? Log in here!</a><br>
+    <a href="{{url_for('login')}}"><h4>Already registered? Log in here!<h4></a>       
+    <a href="{{url_for('home')}}"><h4>Go to Home Page<h4></a><br>
+
 </body>
 </html>

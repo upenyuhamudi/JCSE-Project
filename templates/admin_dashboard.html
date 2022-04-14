@@ -5,19 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admissions Dashboard</title>
+    <style type="text/css">
+        body{
+        font-family: Calibri;
+        font-size: 12pt;
+        }
+        table, th, td {
+            border:1px solid black;
+        }
+        table.center {
+              margin-left: auto; 
+              margin-right: auto;
+        }
+    </style>
 </head>
-<body>
-    <h1>Welcome to Admissions Administration</h1>
-    <h2>Applications</h2>
+<body style = "background: url(https://wallpaperaccess.com/full/1567833.jpg); background-size: 100%;">
+    <h1><center>Welcome to Admissions Administration</center></h1>
+    <h2><center>Applications</center></h2>
 
-    <table>
+    <table class="center", width=60%>
         <thead>
             <th>Application ID</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Address</th>
             <th>Discpline</th>
-            <th>GPA</th>
+            <th>GPA(%)</th>
             <th>Application Status</th>
         </thead>
         <tbody>
@@ -36,8 +49,4 @@
         </tbody>
     </table>   
 
-    <a href="{{url_for('logout')}}">Click here to logout</a><br>
-
-
-</body>
-</html>
+    <a href="{{url_for('logout')}}"><h3><center>Click here to logout</center></h3></a><br>

@@ -5,35 +5,42 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Details</title>
-</head>
-<body>
-    <h1>Update Application Status</h1><br>
+    <style type="text/css">
+      body{
+      font-family: Calibri;
+      font-size: 12pt;
+      }
+  </style>
     
-    <p>Application ID: {{applicant.form_id}}</p><br>
-    <p>First Name: {{applicant.firstname}}</p><br>
-    <p>Surname: {{applicant.lastname}}</p><br>
-    <p>Address: {{applicant.address}}</p><br>
-    <p>Discipline: {{applicant.discipline}}</p><br>
-    <p>GPA: {{applicant.gpa}}</p><br>
+</head>
+<body style = "background: url(https://cdn.pixabay.com/photo/2017/03/30/13/56/turquoise-2188530__340.jpg); background-size: 100%;">
+    <h1><center>Update Application Status</center></h1><br>
 
-     <form action="{{url_for('application_updated',form_id = applicant.form_id,application_status='Accepted')}}" method="POST">
+    <p><center>Application ID: {{applicant.form_id}}</center></p><br>
+    <p><center>First Name: {{applicant.firstname}}</center></p><br>
+    <p><center>Surname: {{applicant.lastname}}</center></p><br>
+    <p><center>Address: {{applicant.address}}</center></p><br>
+    <p><center>Discipline: {{applicant.discipline}}</center></p><br>
+    <p><center>GPA(%): {{applicant.gpa}}</center></p><br>
+
+     <form action="{{url_for('application_updated',form_id = applicant.form_id,application_status='Accepted')}}" method="POST"><center>
 
         <input type = "submit" value = "Accept Application" />
 
-     </form>
-    
-     <form action="{{url_for('application_updated',form_id = applicant.form_id,application_status='Rejected')}}" method="POST">
+     </center></form><br>
+
+     <form action="{{url_for('application_updated',form_id = applicant.form_id,application_status='Rejected')}}" method="POST"><center>
 
         <input type = "submit" value = "Reject Application" />
 
-     </form>
+     </center></form><br>
 
 
-     <form action="{{url_for('application_updated',form_id = applicant.form_id,application_status='Waiting List')}}" method="POST">
+     <form action="{{url_for('application_updated',form_id = applicant.form_id,application_status='Waiting List')}}" method="POST"><center>
 
         <input type = "submit" value = "Add to Waiting List" />
 
-     </form>
+     </center></form><br>
 
 </body>
 </html>

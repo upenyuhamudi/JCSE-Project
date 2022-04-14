@@ -2,7 +2,7 @@ from email.mime import application
 import sqlite3
 from telnetlib import STATUS
 import bcrypt
-from flask import Flask, redirect, render_template, request,url_for,flash
+from flask import Flask, redirect, render_template, request,url_for,flash, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
@@ -11,6 +11,11 @@ from wtforms.validators import InputRequired, Length, ValidationError, Email
 from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
+
+@app.route("/static/<path:path>")
+def static_dir(path):
+    return send_from_directory("static", path)
+
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
